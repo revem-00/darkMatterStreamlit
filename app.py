@@ -1,4 +1,5 @@
 import streamlit as st
+from PIL import Image
 import pyrebase
 from stmol import showmol
 import py3Dmol
@@ -9,7 +10,9 @@ from firebase_config import config
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 
+img = Image.open('media/logo_dark_matter.png')
 
+st.set_page_config(page_icon=img, page_title='Dark Matter')
 header_section = st.container()
 main_section = st.container()
 auth_section = st.container()
@@ -159,22 +162,64 @@ def update(sequence):
 
 def show_main():
     with main_section:
-        st.sidebar.title("ESMFold")
-        st.sidebar.markdown(
-            '''
-                [*ESMFold*](https://esmatlas.com/about) is an end-to-end single sequence protein structure predictor based on the 
-                ESM-2 language model. For more information, read the [research article](https://www.biorxiv.org/content/10.1101/2022.07.20.500902v2) 
-                and the [news article](https://www.nature.com/articles/d41586-022-03539-1) published in *Nature*.
+        choice = st.sidebar.selectbox('Menu', ('Home', 'Fold Sequence'))
+        if choice == 'Home':
+            st.markdown('''
+                
+                #  🌌Dark Matter
+                
+                ## Proteins Are The Building Blocks Of Life 🧱🧬
+                
+                From the complex molecules that detect light so that we can see, to antibodies 💊 that fight off 
+                viruses, and motors that drive motion in microbes 🦠 and our muscles.
+                
+                Little is known about those metagenomic proteins 🧬 beyond their primary amino acid sequence. They can be 
+                considered the “dark matter” of the protein universe.
+                
+                ## Reshape Drug Discovery With AI
+                - Fastest Prediction 🔬 Predictions are up to 60x faster than the current state-of-the-art while 
+                maintaining accuracy
+                - First Large Scale-View 🔎 This Metagenomic Atlas is the first large-scale view of the structures of 
+                metagenomic proteins encompassing hundreds of millions of proteins.
+                 - +700 Millions 🧬 ESM Atlas was updated to v2023_02 bringing the number of predicted protein structures 
+                 from 617 million to a total of 772 million.
+                 
+                 ## Evolutionary Scale Modeling 🧠
+                 Evolutionary scale modeling (ESM) uses AI to learn to read these patterns. In 2019, we presented evidence 
+                 that language models learn the properties of proteins, such as their structure and function. Using a form 
+                 of self-supervised learning known as masked language modeling, we trained a language model on the sequences 
+                 of millions of natural proteins.
+                 
+                 - We have now scaled up this approach to create a next-generation protein language model. 🦾
+                 - Dark Matter with ESM 2, which at 15B parameters is the largest language model of proteins to date.👀
+                 - We found that as the model is scaled up from 8M to 15B parameters, information emerges in the internal 
+                 representations that enables 3D structure prediction at an atomic resolution.
+                 
             ''')
-        # Protein sequence input
-        DEFAULT_SEQUENCE = "MGSSHHHHHHSSGLVPRGSHMRGPNPTAASLEASAGPFTVRSFTVSRPSGYGAGTVYYPTNAGGTVGAIAIVPGYTARQSSIKWWGPRLASHGFVVITIDTNSTLDQPSSRSSQQMAALRQVASLNGTSSSPIYGKVDTARMGVMGWSMGGGGSLISAANNPSLKAAAPQAPWDSSTNFSSVTVPTLIFACENDSIAPVNSSALPIYDSMSRNAKQFLEINGGSHSCANSGNSNQALIGKKGVAWMKRFMDNDTRYSTFACENPNSTRVSDFRTANCSLEDPAANKARKEAELAAATAEQ"
-        txt = st.sidebar.text_area('**Input sequence:**', DEFAULT_SEQUENCE, height=275)
-        # predict function button
-        predict = st.sidebar.button('Predict')
-        if predict:
-            update(txt)
-        else:
-            st.warning('👈 Enter protein sequence data!')
+        elif choice == 'Fold Sequence':
+            st.sidebar.title(" 🤖 ESMFold")
+            st.sidebar.markdown(
+                '''
+                    [*ESMFold*](https://esmatlas.com/about) is an end-to-end single sequence protein structure predictor 
+                    based on the ESM-2 language model. For more information, read the 
+                    [research article](https://www.biorxiv.org/content/10.1101/2022.07.20.500902v2) 
+                    and the [news article](https://www.nature.com/articles/d41586-022-03539-1) published in *Nature*.
+                ''')
+            # Protein sequence input
+            DEFAULT_SEQUENCE = "MGSSHHHHHHSSGLVPRGSHMRGPNPTAASLEASAGPFTVRSFTVSRPSGYGAGTVYYPTNAGGTVGAIAIVPGYTARQSSIKWWGPRLASHGFVVITIDTNSTLDQPSSRSSQQMAALRQVASLNGTSSSPIYGKVDTARMGVMGWSMGGGGSLISAANNPSLKAAAPQAPWDSSTNFSSVTVPTLIFACENDSIAPVNSSALPIYDSMSRNAKQFLEINGGSHSCANSGNSNQALIGKKGVAWMKRFMDNDTRYSTFACENPNSTRVSDFRTANCSLEDPAANKARKEAELAAATAEQ"
+            example = st.sidebar.selectbox('Try an example: ', ('Sequence example 1', 'sequence example 2'))
+            if example == 'Sequence example 1':
+                DEFAULT_SEQUENCE = "MTSKPAAAQPGPSTGTSLSSAPLLDVSDLHMHFPIRRGVLQRAVGYVRAVDGVSLSIARGRTLALVGESGCGKTTAGKAILQLLRPTRGHVRFDG"
+            elif example == 'Sequence example 2':
+
+                DEFAULT_SEQUENCE = "AMKRHGLDNYRGYSLGNWVCAAKFESNFNTQATNRNTDGSTDYGILQINSRWWCNDGRTPGSRNLCNIPCSALLSSDITASVNCAKKIVSDGNGMNAWVAWRNRCKGTDVQAWIRGCRL"
+            txt = st.sidebar.text_area('**Input sequence:**', DEFAULT_SEQUENCE, height=275)
+            # predict function button
+            predict = st.sidebar.button('Predict')
+            if predict:
+                update(txt)
+            else:
+                st.warning('👈 Enter protein sequence data!')
 
 
 with header_section:
