@@ -1,0 +1,7 @@
+streamlit
+pyrebase4
+stmol
+py3Dmol
+biotite
+ipython_genutils==0.1.0
+requests
