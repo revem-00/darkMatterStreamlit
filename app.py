@@ -211,7 +211,6 @@ def show_main():
             if example == 'Sequence example 1':
                 DEFAULT_SEQUENCE = "MTSKPAAAQPGPSTGTSLSSAPLLDVSDLHMHFPIRRGVLQRAVGYVRAVDGVSLSIARGRTLALVGESGCGKTTAGKAILQLLRPTRGHVRFDG"
             elif example == 'Sequence example 2':
-
                 DEFAULT_SEQUENCE = "AMKRHGLDNYRGYSLGNWVCAAKFESNFNTQATNRNTDGSTDYGILQINSRWWCNDGRTPGSRNLCNIPCSALLSSDITASVNCAKKIVSDGNGMNAWVAWRNRCKGTDVQAWIRGCRL"
             txt = st.sidebar.text_area('**Input sequence:**', DEFAULT_SEQUENCE, height=275)
             # predict function button
